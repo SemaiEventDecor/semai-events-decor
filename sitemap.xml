@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://semaieventsdecor.com/</loc><changefreq>monthly</changefreq><priority>1.0</priority></url>
-  <url><loc>https://semaieventsdecor.com/about/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://semaieventsdecor.com/services/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://semaieventsdecor.com/packages/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://semaieventsdecor.com/gallery/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://semaieventsdecor.com/contact/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://semaieventdecor.github.io/semai-events-decor/</loc><changefreq>monthly</changefreq><priority>1.0</priority></url>
+  <url><loc>https://semaieventdecor.github.io/semai-events-decor/about.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://semaieventdecor.github.io/semai-events-decor/services.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://semaieventdecor.github.io/semai-events-decor/packages.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://semaieventdecor.github.io/semai-events-decor/gallery.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://semaieventdecor.github.io/semai-events-decor/contact.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
 </urlset>

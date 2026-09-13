@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://semaieventsdecor.com/sitemap.xml
+Sitemap: https://semaieventdecor.github.io/semai-events-decor/sitemap.xml
