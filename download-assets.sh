@@ -9,8 +9,6 @@ curl -fL --create-dirs -o "service-birthday.jpg" "https://semaieventsdecor.lovab
 curl -fL --create-dirs -o "service-bridal.jpg" "https://semaieventsdecor.lovable.app/assets/service-bridal-CkYIw01B.jpg"
 curl -fL --create-dirs -o "service-baby.jpg" "https://semaieventsdecor.lovable.app/assets/service-baby-DbaqTa8D.jpg"
 curl -fL --create-dirs -o "service-engagement.jpg" "https://semaieventsdecor.lovable.app/assets/service-engagement-7bYrcUMP.jpg"
-curl -fL --create-dirs -o "service-wedding.jpg" "https://semaieventsdecor.lovable.app/assets/service-wedding-CmBSC-r2.jpg"
-curl -fL --create-dirs -o "service-corporate.jpg" "https://semaieventsdecor.lovable.app/assets/service-corporate-DFJ-w3Fn.jpg"
 curl -fL --create-dirs -o "service-custom.jpg" "https://semaieventsdecor.lovable.app/assets/service-custom-Btgn97VC.jpg"
 
 echo 'Done. Photos are in ./assets'

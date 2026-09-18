@@ -54,9 +54,9 @@ real copies. Right-click each photo on your Lovable site, choose "Save image
 as", and save it using the exact filenames listed in `download-assets.sh`:
 
 ```
-hero.jpg              about-studio.jpg      service-birthday.jpg
-service-bridal.jpg    service-baby.jpg      service-engagement.jpg
-service-wedding.jpg   service-corporate.jpg service-custom.jpg
+hero.jpg              about-studio.jpg       service-birthday.jpg
+service-bridal.jpg    service-baby.jpg       service-engagement.jpg
+service-custom.jpg
 ```
 
 Then upload them to the repository the same way as the HTML files. They belong

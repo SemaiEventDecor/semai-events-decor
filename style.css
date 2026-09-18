@@ -233,7 +233,9 @@ a { color: var(--wine); text-decoration-thickness: 1px; text-underline-offset: 3
 }
 .hero__inner { padding-block: clamp(3.5rem, 9vw, 6.5rem); }
 .hero .eyebrow { color: #E8C9A0; }
-.hero h1 { max-width: 15ch; }
+/* Sized so "Memorable celebrations." holds one line at any width.
+   The <br> forces the break; this keeps the second line from wrapping again. */
+.hero h1 { max-width: none; font-size: min(8.2vw, 4.5rem); }
 .hero p { color: rgba(255,255,255,.9); font-size: 1.15rem; margin-top: 1.5rem; max-width: 54ch; }
 
 /* One deliberate entrance on the hero, and nothing else on the page. */
