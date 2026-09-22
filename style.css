@@ -498,11 +498,6 @@ a { color: var(--wine); text-decoration-thickness: 1px; text-underline-offset: 3
   padding: 0; margin: -1px; overflow: hidden;
   clip: rect(0 0 0 0); white-space: nowrap; border: 0;
 }
-.reserved {
-  border: 1px dashed var(--line);
-  border-radius: var(--radius);
-  padding: clamp(1.5rem, 3vw, 2rem);
-  background: var(--white);
-}
-.reserved .eyebrow { margin-bottom: .6rem; }
-.reserved p { color: var(--muted); font-size: .98rem; }
+
+/* Single-column reading width for longer text sections */
+.story { max-width: 46rem; }
