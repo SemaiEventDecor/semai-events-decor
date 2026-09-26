@@ -199,3 +199,107 @@ const CONTACT_EMAIL = "info@semaieventsdecor.com";
 document.querySelectorAll("[data-year]").forEach((el) => {
   el.textContent = new Date().getFullYear();
 });
+
+/* =============================================================
+   YOUR REVIEWS
+   -------------------------------------------------------------
+   Add real client reviews between the square brackets below.
+   While the list is empty the whole band stays hidden, so the
+   site never shows placeholder text.
+
+   Copy this shape for each one, comma between them:
+
+     { text: "They made our day beautiful.", name: "Sarah M.",
+       event: "Bridal shower, Ottawa" },
+
+   "event" is optional. Keep quotes short enough to read at a
+   glance - roughly 30 words works best. Add as many as you like;
+   past eight the dots become a "3 / 12" counter instead.
+   ============================================================= */
+const REVIEWS = [
+];
+
+(function reviewsBand() {
+  const band = document.getElementById("reviews");
+  if (!band || !REVIEWS.length) return;
+
+  const quote = band.querySelector(".review__text");
+  const who = band.querySelector(".review__who");
+  const dots = band.querySelector(".review__dots");
+  const count = band.querySelector(".review__count");
+  const prev = band.querySelector(".review__arrow--prev");
+  const next = band.querySelector(".review__arrow--next");
+  const many = REVIEWS.length > 1;
+  const useDots = many && REVIEWS.length <= 8;
+  const still = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  let i = 0, timer = null;
+
+  const paint = (n) => {
+    const r = REVIEWS[n];
+    quote.textContent = "\u201C" + r.text + "\u201D";
+    who.textContent = [r.name, r.event].filter(Boolean).join(" \u00B7 ");
+    if (useDots) dots.querySelectorAll("button").forEach((b, k) =>
+      b.setAttribute("aria-selected", String(k === n)));
+    if (count && !count.hidden) count.textContent = (n + 1) + " / " + REVIEWS.length;
+  };
+
+  const go = (n) => {
+    n = (n + REVIEWS.length) % REVIEWS.length;
+    if (n === i) return;
+    i = n;
+    if (still) return paint(i);
+    band.classList.add("is-fading");
+    setTimeout(() => { paint(i); band.classList.remove("is-fading"); }, 400);
+  };
+
+  const start = () => { if (!still && many && !timer) timer = setInterval(() => go(i + 1), 6500); };
+  const stop = () => { clearInterval(timer); timer = null; };
+  const step = (d) => { stop(); go(i + d); start(); };
+
+  // A single review needs no controls at all
+  if (!many) { prev.hidden = true; next.hidden = true; }
+  prev.addEventListener("click", () => step(-1));
+  next.addEventListener("click", () => step(1));
+
+  if (useDots) {
+    REVIEWS.forEach((r, n) => {
+      const b = document.createElement("button");
+      b.type = "button";
+      b.setAttribute("aria-label", "Show review " + (n + 1) + " of " + REVIEWS.length);
+      b.addEventListener("click", () => { stop(); go(n); start(); });
+      dots.appendChild(b);
+    });
+  } else if (many && count) {
+    count.hidden = false;
+  }
+
+  // Arrow keys when the band has focus
+  band.addEventListener("keydown", (e) => {
+    if (!many) return;
+    if (e.key === "ArrowLeft") { e.preventDefault(); step(-1); }
+    if (e.key === "ArrowRight") { e.preventDefault(); step(1); }
+  });
+
+  // Swipe on touch screens
+  let sx = null, sy = null;
+  band.addEventListener("touchstart", (e) => {
+    sx = e.touches[0].clientX; sy = e.touches[0].clientY; stop();
+  }, { passive: true });
+  band.addEventListener("touchend", (e) => {
+    if (sx === null) { start(); return; }
+    const dx = e.changedTouches[0].clientX - sx;
+    const dy = e.changedTouches[0].clientY - sy;
+    if (Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy)) go(i + (dx < 0 ? 1 : -1));
+    sx = sy = null; start();
+  }, { passive: true });
+
+  band.addEventListener("mouseenter", stop);
+  band.addEventListener("mouseleave", start);
+  band.addEventListener("focusin", stop);
+  band.addEventListener("focusout", start);
+  document.addEventListener("visibilitychange", () => document.hidden ? stop() : start());
+
+  paint(0);
+  band.hidden = false;
+  start();
+})();

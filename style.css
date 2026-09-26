@@ -501,3 +501,64 @@ a { color: var(--wine); text-decoration-thickness: 1px; text-underline-offset: 3
 
 /* Single-column reading width for longer text sections */
 .story { max-width: 46rem; }
+
+/* --- Reviews band --------------------------------------------
+   Hidden until at least one review is added in main.js. */
+.reviews { text-align: center; padding-block: clamp(2.75rem, 6vw, 4.5rem); }
+.reviews[hidden] { display: none; }
+
+.reviews__stage {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: clamp(.5rem, 2vw, 2rem);
+  touch-action: pan-y;
+}
+.review__body { min-width: 0; }
+.review__text {
+  font-family: var(--serif);
+  font-size: clamp(1.35rem, 2.7vw, 2.05rem);
+  line-height: 1.3;
+  max-width: 42ch;
+  margin: 0 auto;
+  min-height: 2.6em;                 /* stops the band jumping between reviews */
+  transition: opacity .4s ease;
+}
+.review__who {
+  font-size: .78rem; letter-spacing: .16em; text-transform: uppercase;
+  color: var(--muted); margin: 1.1rem auto 0; min-height: 1.4em;
+  transition: opacity .4s ease;
+}
+.reviews.is-fading .review__text, .reviews.is-fading .review__who { opacity: 0; }
+
+.review__arrow {
+  display: grid; place-items: center;
+  width: clamp(38px, 9vw, 48px); aspect-ratio: 1;
+  border: 1px solid var(--line); border-radius: 50%;
+  background: var(--paper); color: var(--ink);
+  cursor: pointer;
+  transition: background-color .2s ease, border-color .2s ease, color .2s ease;
+}
+.review__arrow svg { width: 40%; height: 40%; }
+.review__arrow--prev svg { transform: scaleX(-1); }
+.review__arrow:hover, .review__arrow:focus-visible {
+  background: var(--wine); border-color: var(--wine); color: var(--paper);
+}
+.review__arrow[hidden] { display: none; }
+
+.review__dots { display: flex; justify-content: center; flex-wrap: wrap; gap: .55rem; margin-top: 1.5rem; }
+.review__dots:empty { display: none; }
+.review__dots button {
+  width: 9px; height: 9px; padding: 0;
+  border: 1px solid var(--brass); border-radius: 50%;
+  background: transparent; cursor: pointer;
+  transition: background-color .2s ease;
+}
+.review__dots button[aria-selected="true"] { background: var(--brass); }
+
+.review__count {
+  margin: 1.5rem auto 0;
+  font-size: .78rem; letter-spacing: .16em; color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+.review__count[hidden] { display: none; }
