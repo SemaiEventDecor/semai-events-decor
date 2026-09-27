@@ -302,3 +302,28 @@ const REVIEWS = [
   band.hidden = false;
   start();
 })();
+
+/* --- Email links -------------------------------------------
+   On phones and tablets a mailto: link is handy, so leave it.
+   On a computer it can open an empty mail app with no account
+   set up, which is a dead end - so copy the address instead. --- */
+(function emailLinks() {
+  const touch = window.matchMedia("(pointer: coarse)").matches;
+  if (touch) return;
+
+  document.querySelectorAll('a[href^="mailto:"]').forEach((link) => {
+    link.addEventListener("click", async (e) => {
+      const address = link.getAttribute("href").replace("mailto:", "").split("?")[0];
+      try {
+        await navigator.clipboard.writeText(address);
+      } catch (err) {
+        return;                       // clipboard blocked: let mailto try instead
+      }
+      e.preventDefault();
+      const original = link.textContent;
+      link.textContent = "Copied \u2014 " + address;
+      link.style.opacity = ".7";
+      setTimeout(() => { link.textContent = original; link.style.opacity = ""; }, 2200);
+    });
+  });
+})();
