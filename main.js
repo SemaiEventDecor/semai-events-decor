@@ -15,7 +15,7 @@
 
      const FORM_ENDPOINT = "https://formspree.io/f/xxxxxxxx";
    ------------------------------------------------------------- */
-const FORM_ENDPOINT = "";
+const FORM_ENDPOINT = "https://formspree.io/f/xyezblya";
 const CONTACT_EMAIL = "info@semaieventsdecor.com";
 
 /* --- Mobile navigation -------------------------------------- */
@@ -187,7 +187,8 @@ const CONTACT_EMAIL = "info@semaieventsdecor.com";
       form.reset();
       say("Thank you — your inquiry is on its way. We usually reply within two business days.", "ok");
     } catch (err) {
-      say("That didn't send. Email us directly at " + CONTACT_EMAIL + " and we'll pick it up from there.", "err");
+      say("That didn't send. Please email us at " + CONTACT_EMAIL +
+          " - tap and hold to copy - and we'll pick it up from there.", "err");
     } finally {
       submit.disabled = false;
       submit.textContent = original;
