@@ -138,7 +138,6 @@ const CONTACT_EMAIL = "info@semaieventsdecor.com";
   };
 
   const readable = (data) => {
-    const services = data.getAll("services");
     const lines = [
       ["Name", [data.get("firstName"), data.get("lastName")].filter(Boolean).join(" ")],
       ["Email", data.get("email")],
@@ -147,7 +146,6 @@ const CONTACT_EMAIL = "info@semaieventsdecor.com";
       ["Event date", data.get("eventDate")],
       ["Location", data.get("eventLocation")],
       ["Guest count", data.get("guestCount")],
-      ["Services", services.join(", ")],
       ["Budget", data.get("budget")],
       ["Vision", data.get("message")],
     ];
