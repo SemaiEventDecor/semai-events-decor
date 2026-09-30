@@ -203,25 +203,27 @@ document.querySelectorAll("[data-year]").forEach((el) => {
    YOUR REVIEWS
    -------------------------------------------------------------
    Add real client reviews between the square brackets below.
-   While the list is empty the whole band stays hidden, so the
-   site never shows placeholder text.
+   While the list is empty the whole band stays hidden.
 
    Copy this shape for each one, comma between them:
 
      { text: "They made our day beautiful.", name: "Sarah M.",
        event: "Bridal shower, Ottawa" },
 
-   "event" is optional. Keep quotes short enough to read at a
-   glance - roughly 30 words works best. Add as many as you like;
-   past eight the dots become a "3 / 12" counter instead.
+   "event" is optional. Add as many as you like; past eight the
+   dots become a "3 / 12" counter instead.
    ============================================================= */
 const REVIEWS = [
+  { text: "This company worked with my budget and took the time to create a look that we wanted to achieve. I could see the love and hard work that was put into the beautiful decorations that were created for her party which made the event so joyful and special. I would not hesitate to use them again. I highly recommend Semai Events Decor.",
+    name: "V. Chevrier", event: "90th birthday, Ottawa" },
 ];
 
 (function reviewsBand() {
   const band = document.getElementById("reviews");
   if (!band || !REVIEWS.length) return;
 
+  const stage = band.querySelector(".reviews__stage");
+  const body = band.querySelector(".review__body");
   const quote = band.querySelector(".review__text");
   const who = band.querySelector(".review__who");
   const dots = band.querySelector(".review__dots");
@@ -231,7 +233,7 @@ const REVIEWS = [
   const many = REVIEWS.length > 1;
   const useDots = many && REVIEWS.length <= 8;
   const still = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  let i = 0, timer = null;
+  let i = 0, timer = null, sliding = false;
 
   const paint = (n) => {
     const r = REVIEWS[n];
@@ -242,23 +244,43 @@ const REVIEWS = [
     if (count && !count.hidden) count.textContent = (n + 1) + " / " + REVIEWS.length;
   };
 
-  const go = (n) => {
+  /* Slide the current review out, then bring the next one in from the other side. */
+  const go = (n, dir) => {
     n = (n + REVIEWS.length) % REVIEWS.length;
-    if (n === i) return;
+    if (n === i || sliding) return;
+    dir = dir || (n > i ? 1 : -1);
     i = n;
     if (still) return paint(i);
-    band.classList.add("is-fading");
-    setTimeout(() => { paint(i); band.classList.remove("is-fading"); }, 400);
+    sliding = true;
+    body.style.transform = "translateX(" + (dir * -40) + "px)";
+    body.style.opacity = "0";
+    setTimeout(() => {
+      paint(i);
+      body.style.transition = "none";
+      body.style.transform = "translateX(" + (dir * 40) + "px)";
+      void body.offsetWidth;                 // force the jump to apply before animating back
+      body.style.transition = "";
+      body.style.transform = "translateX(0)";
+      body.style.opacity = "1";
+      setTimeout(() => { sliding = false; }, 420);
+    }, 380);
   };
 
-  const start = () => { if (!still && many && !timer) timer = setInterval(() => go(i + 1), 6500); };
+  const start = () => { if (!still && many && !timer) timer = setInterval(() => go(i + 1, 1), 6500); };
   const stop = () => { clearInterval(timer); timer = null; };
-  const step = (d) => { stop(); go(i + d); start(); };
+  const step = (d) => { stop(); go(i + d, d); start(); };
 
-  // A single review needs no controls at all
   if (!many) { prev.hidden = true; next.hidden = true; }
-  prev.addEventListener("click", () => step(-1));
-  next.addEventListener("click", () => step(1));
+
+  /* Arrows respond to hover as well as click. The short delay stops a cursor
+     merely crossing the band from flipping the review. */
+  [[prev, -1], [next, 1]].forEach(([btn, d]) => {
+    let hover = null;
+    btn.addEventListener("click", () => { clearTimeout(hover); step(d); });
+    btn.addEventListener("mouseenter", () => { hover = setTimeout(() => step(d), 350); });
+    btn.addEventListener("mouseleave", () => clearTimeout(hover));
+    btn.addEventListener("focus", () => step(0));   // keep focus from auto-advancing
+  });
 
   if (useDots) {
     REVIEWS.forEach((r, n) => {
@@ -272,23 +294,24 @@ const REVIEWS = [
     count.hidden = false;
   }
 
-  // Arrow keys when the band has focus
   band.addEventListener("keydown", (e) => {
     if (!many) return;
     if (e.key === "ArrowLeft") { e.preventDefault(); step(-1); }
     if (e.key === "ArrowRight") { e.preventDefault(); step(1); }
   });
 
-  // Swipe on touch screens
   let sx = null, sy = null;
-  band.addEventListener("touchstart", (e) => {
+  stage.addEventListener("touchstart", (e) => {
     sx = e.touches[0].clientX; sy = e.touches[0].clientY; stop();
   }, { passive: true });
-  band.addEventListener("touchend", (e) => {
+  stage.addEventListener("touchend", (e) => {
     if (sx === null) { start(); return; }
     const dx = e.changedTouches[0].clientX - sx;
     const dy = e.changedTouches[0].clientY - sy;
-    if (Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy)) go(i + (dx < 0 ? 1 : -1));
+    if (Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy)) {
+      const d = dx < 0 ? 1 : -1;
+      go(i + d, d);
+    }
     sx = sy = null; start();
   }, { passive: true });
 
