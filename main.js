@@ -216,6 +216,12 @@ document.querySelectorAll("[data-year]").forEach((el) => {
 const REVIEWS = [
   { text: "This company worked with my budget and took the time to create a look that we wanted to achieve. I could see the love and hard work that was put into the beautiful decorations that were created for her party which made the event so joyful and special. I would not hesitate to use them again. I highly recommend Semai Events Decor.",
     name: "V. Chevrier", event: "90th birthday, Ottawa" },
+
+  { text: "I absolutely loved my graduation decoration! It was beyond what I expected. So beautiful, elegant, and absolutely amazing. I truly couldn't have asked for more. Everything was done perfectly, and I was extremely happy and satisfied with how it turned out. Thank you for making my graduation celebration even more special!",
+    name: "Martha K.", event: "Graduation, Ottawa" },
+
+  { text: "Semai Events Decor did my sister's graduation and it was so beautiful. 10 out of 10 would recommend!",
+    name: "Peace T.", event: "Graduation, Ottawa" },
 ];
 
 (function reviewsBand() {
